@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ticket App</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+            background-color: #f3f4f6; /* Light gray background to frame the "phone" */
+        }
+
+        /* Hide scrollbar for clean UI */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Security Animations */
+        @keyframes scale-pulse-custom {
+            0%, 100% { transform: scale(0.85); }
+            50% { transform: scale(1.08); }
+        }
+        .animate-scale-pulse {
+            animation: scale-pulse-custom 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes spin-custom {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-spin-custom {
+            animation: spin-custom 3s linear infinite;
+        }
+
+        /* Thick arrows */
+        .thick-arrow {
+            -webkit-text-stroke: 3px currentColor;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-center min-h-screen text-gray-900">
+
+    <!-- Mobile Device Container -->
+    <div class="w-full max-w-md h-[100dvh] bg-white relative shadow-2xl flex flex-col overflow-hidden sm:rounded-3xl sm:h-[90vh] sm:border-[8px] sm:border-gray-800">
+        
+        <!-- Header (Teal, No Status Bar) -->
+        <div class="bg-[#2b8678] w-full z-50 shrink-0">
+            <header class="w-full h-14 pt-1 text-white flex items-center px-4 relative">
+                <button class="text-2xl p-2 -ml-2 focus:outline-none hover:opacity-80 flex items-center z-10 font-light">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span class="text-[19px] font-semibold tracking-wide">Ticket</span>
+                </div>
+            </header>
+        </div>
+
+        <!-- Main Scrollable Content -->
+        <main class="flex-1 overflow-y-auto no-scrollbar pb-16 bg-white w-full">
+            
+            <!-- Seconds Since Activation Bar -->
+            <div class="bg-[#d9ede9] w-full px-4 py-3 flex justify-between items-center border-b border-gray-100">
+                <span class="text-[17px] text-black">Seconds since activation:</span>
+                <span id="seconds-counter" class="text-[20px] font-bold text-black">30</span>
+            </div>
+
+            <!-- INSERT YOUR LOGO IMAGE ON THE LINE BELOW -->
+            <img src="Images/IMG_3882.jpg" alt="Company Logo" class="w-full h-auto object-contain my-2 px-4">
+
+            <!-- Route Info Section -->
+            <div class="py-4 px-5">
+                <!-- Route 1 -->
+                <div class="flex items-center justify-between">
+                    <div class="flex-1 text-left">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Origin</div>
+                        <div class="font-bold text-[13px] leading-tight text-gray-900">BAILIEBOROUGH</div>
+                    </div>
+                    <div class="px-3 shrink-0 flex items-center justify-center">
+                        <i class="fas fa-arrow-right text-[#c197e8] text-xs"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Destination</div>
+                        <div class="font-bold text-[13px] leading-tight text-gray-900">DUNDALK INSTITUTE<br>OF TECHNOLOGY</div>
+                    </div>
+                </div>
+                
+                <!-- Divider -->
+                <div class="flex items-center my-3">
+                    <div class="flex-grow border-t border-solid border-gray-300"></div>
+                    <span class="px-3 text-xs text-gray-400 font-medium">or</span>
+                    <div class="flex-grow border-t border-solid border-gray-300"></div>
+                </div>
+                
+                <!-- Route 2 -->
+                <div class="flex items-center justify-between">
+                    <div class="flex-1 text-left">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Origin</div>
+                        <div class="font-bold text-[13px] leading-tight text-gray-900">DUNDALK INSTITUTE<br>OF TECHNOLOGY</div>
+                    </div>
+                    <div class="px-3 shrink-0 flex items-center justify-center">
+                        <i class="fas fa-arrow-right text-[#c197e8] text-xs"></i>
+                    </div>
+                    <div class="flex-1 text-right">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Destination</div>
+                        <div class="font-bold text-[13px] leading-tight text-gray-900">BAILIEBOROUGH</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Security Centerpiece -->
+            <div id="centerpiece-container" class="relative py-8 flex flex-col items-center justify-center overflow-hidden h-72 bg-white w-full">
+                
+                <!-- Static Background Arrows (2 Left, 3 Right) -->
+                <!-- Left Arrows -->
+                <i class="fas fa-arrow-up absolute left-6 top-12 text-[#b895e6] text-4xl thick-arrow" style="transform: rotate(-35deg);"></i>
+                <i class="fas fa-arrow-right absolute left-8 bottom-16 text-[#b895e6] text-4xl thick-arrow" style="transform: rotate(60deg);"></i>
+                
+                <!-- Right Arrows -->
+                <i class="fas fa-arrow-down absolute right-8 top-10 text-[#b895e6] text-3xl thick-arrow" style="transform: rotate(-15deg);"></i>
+                <i class="fas fa-arrow-left absolute right-4 top-1/2 text-[#b895e6] text-4xl thick-arrow" style="transform: rotate(145deg);"></i>
+                <i class="fas fa-arrow-up absolute right-12 bottom-12 text-[#b895e6] text-3xl thick-arrow" style="transform: rotate(220deg);"></i>
+
+                <!-- Circle Container (Pulsing Wrapper) -->
+                <div class="absolute z-10 w-[220px] h-[220px] flex items-center justify-center">
+                    <div class="absolute inset-0 animate-scale-pulse">
+                        
+                        <!-- Spinning Assembly (Rings + Text) -->
+                        <div class="w-full h-full animate-spin-custom rounded-full bg-[#4B108B] p-[22px] shadow-lg flex items-center justify-center">
+                            <!-- Middle Ring (Light Purple) -->
+                            <div class="w-full h-full rounded-full bg-[#A37BE0] p-[22px] flex items-center justify-center">
+                                <!-- Inner Core (Dark Purple) & Text -->
+                                <div class="w-full h-full rounded-full bg-[#4B108B] flex items-center justify-center">
+                                    <span class="text-white font-medium text-[26px] tracking-wider block">YA/S</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Live Dynamic Time overlay (Bouncing, Pure Black, No Outline) -->
+                <div id="dynamic-time" class="absolute top-0 left-0 z-20 text-[28px] font-medium text-black tracking-normal pointer-events-none whitespace-nowrap" style="text-shadow: none; -webkit-text-stroke: 0;">
+                    --:-- -- ---
+                </div>
+            </div>
+
+            <!-- Details List -->
+            <div class="px-5 py-2 text-[#105449]">
+                <div class="py-2.5">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Name</div>
+                    <div class="font-bold text-[16px]">Sean Moloney</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Passenger</div>
+                    <div class="font-bold text-[16px]">Young Adult / Student</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Operator</div>
+                    <div class="font-bold text-[16px]">Royal Breffni Tours</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Ticket-ID</div>
+                    <div class="font-bold text-[16px]">8892781</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Origin</div>
+                    <div class="font-bold text-[16px]">Bailieborough</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Destination</div>
+                    <div class="font-bold text-[16px]">Dundalk Institute of Technology</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Activation</div>
+                    <div id="activation-time" class="font-bold text-[16px]">--/--/----, --:--</div>
+                </div>
+                <div class="py-2.5 border-t border-gray-100">
+                    <div class="text-[11px] text-gray-500 mb-0.5">Valid Until</div>
+                    <div id="valid-until-time" class="font-bold text-[16px]">--/--/----, --:--</div>
+                </div>
+            </div>
+
+            <!-- Terms / Fine Print -->
+            <div class="px-5 py-4 border-t border-gray-100 text-[11px] leading-relaxed text-gray-500 text-justify">
+                Expires 28 days after purchase. Valid for 10 single journeys between origin and destination in either direction for one Young Adult / Student (Valid Young Adult / Student Leap Card ID Required). Each ticket is valid for 90 minutes after activation.
+            </div>
+
+            <!-- QR Section -->
+            <div class="px-5 pb-8 pt-4 flex flex-col items-center border-t border-gray-100">
+                <div class="flex items-center gap-1 mb-4 text-[#187d46] font-bold text-2xl tracking-tighter">
+                    <span>TFI</span>
+                    <i class="fas fa-walking text-xl mx-0.5"></i>
+                    <span>GO</span>
+                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" 
+                     alt="Valid Ticket QR Code" 
+                     class="w-48 h-48 opacity-95" />
+            </div>
+
+        </main>
+
+        <!-- Fixed Bottom Navigation -->
+        <nav class="absolute bottom-0 left-0 w-full h-16 bg-white border-t border-gray-200 flex justify-around items-center z-50 shrink-0 pb-1">
+            <button class="flex flex-col items-center justify-center w-1/3 text-gray-400 hover:text-gray-600 transition-colors">
+                <div class="w-7 h-7 rounded-full border-[1.5px] border-current flex items-center justify-center mb-1">
+                    <i class="fas fa-euro-sign text-sm"></i>
+                </div>
+                <span class="text-[10px] font-medium">Buy</span>
+            </button>
+            
+            <button class="flex flex-col items-center justify-center w-1/3 text-[#105449] transition-colors">
+                <i class="fas fa-ticket-alt text-[22px] mb-1"></i>
+                <span class="text-[10px] font-medium">Tickets</span>
+            </button>
+            
+            <button class="flex flex-col items-center justify-center w-1/3 text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="far fa-user text-[20px] mb-1"></i>
+                <span class="text-[10px] font-medium">Profile</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        // Live Dynamic Time Ticker (Format: HH:MM DD MMM)
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const month = months[now.getMonth()];
+            
+            document.getElementById('dynamic-time').innerText = `${hours}:${minutes} ${day} ${month}`;
+        }
+
+        // Set Activation (Current Time) and Valid Until (Current + 2.5 Hrs)
+        function setActivationTimes() {
+            const now = new Date();
+            
+            const formatTime = (date) => {
+                const d = String(date.getDate()).padStart(2, '0');
+                const m = String(date.getMonth() + 1).padStart(2, '0');
+                const y = date.getFullYear();
+                const h = String(date.getHours()).padStart(2, '0');
+                const min = String(date.getMinutes()).padStart(2, '0');
+                return `${d}/${m}/${y}, ${h}:${min}`;
+            };
+
+            const activationStr = formatTime(now);
+            const validDate = new Date(now.getTime() + (2 * 60 * 60 * 1000) + (30 * 60 * 1000));
+            const validStr = formatTime(validDate);
+
+            const actEl = document.getElementById('activation-time');
+            const valEl = document.getElementById('valid-until-time');
+            
+            if (actEl && valEl) {
+                actEl.innerText = activationStr;
+                valEl.innerText = validStr;
+            }
+        }
+
+        // Bouncing DVD Logo Physics (Slow movement)
+        let x = 30, y = 30;
+        let dx = 0.4, dy = 0.4;
+
+        function animateBounce() {
+            const container = document.getElementById('centerpiece-container');
+            const timeEl = document.getElementById('dynamic-time');
+            
+            if (container && timeEl) {
+                const cw = container.clientWidth;
+                const ch = container.clientHeight;
+                const tw = timeEl.offsetWidth;
+                const th = timeEl.offsetHeight;
+                
+                x += dx;
+                y += dy;
+                
+                if (x + tw >= cw) {
+                    x = cw - tw;
+                    dx = -Math.abs(dx);
+                } else if (x <= 0) {
+                    x = 0;
+                    dx = Math.abs(dx);
+                }
+                
+                if (y + th >= ch) {
+                    y = ch - th;
+                    dy = -Math.abs(dy);
+                } else if (y <= 0) {
+                    y = 0;
+                    dy = Math.abs(dy);
+                }
+                
+                timeEl.style.transform = `translate(${x}px, ${y}px)`;
+            }
+            requestAnimationFrame(animateBounce);
+        }
+
+        // Initialize features
+        updateTime();
+        setInterval(updateTime, 1000);
+        setActivationTimes();
+        
+        // Seconds Since Activation Counter
+        let secondsSinceAct = 30;
+        const secondsCounterEl = document.getElementById('seconds-counter');
+        setInterval(() => {
+            secondsSinceAct++;
+            if (secondsCounterEl) {
+                secondsCounterEl.innerText = secondsSinceAct;
+            }
+        }, 1000);
+
+        // Wait a small tick before bounding the clock to ensure fonts have loaded their width
+        setTimeout(() => {
+            requestAnimationFrame(animateBounce);
+        }, 100);
+
+    </script>
+</body>
+</html>
